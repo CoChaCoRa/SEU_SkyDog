@@ -2,9 +2,9 @@ package vo;
 
 public class GoodsInfo {
 	private String Name;
-	private String Price;
-	private String Stock;
-	private String SKU;
+	private double Price;
+	private int Stock;
+	private int SKU;
 	private String Categ;
 	private String Pic;
 	private String State;
@@ -12,13 +12,13 @@ public class GoodsInfo {
 	public void setName(String name) {
 		this.Name = name;
 	}
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.Price = price;
 	}
-	public void setStock(String stock) {
+	public void setStock(int stock) {
 		this.Stock = stock;
 	}
-	public void setSKU(String sku) {
+	public void setSKU(int sku) {
 		this.SKU = sku;
 	}
 	public void setCateg(String categ) {
@@ -34,13 +34,13 @@ public class GoodsInfo {
 	public String getName() {
 		return Name;
 	}
-	public String getPrice() {
+	public double getPrice() {
 		return Price;
 	}
-	public String getStock() {
+	public int getStock() {
 		return Stock;
 	}
-	public String getSKU() {
+	public int getSKU() {
 		return SKU;
 	}
 	public String getCateg() {

@@ -25,9 +25,9 @@ public class GoodsIntroDaoImpl implements GoodsIntroDao{
 				GoodsInfo pi;
 				pi=new GoodsInfo();
 				pi.setName(rs.getString("goodsName"));
-				pi.setPrice(rs.getString("goodsPrice"));
-				pi.setStock(rs.getString("goodsStock"));
-				pi.setSKU(rs.getString("goodsSKU"));
+				pi.setPrice(rs.getDouble("goodsPrice"));
+				pi.setStock(rs.getInt("goodsStock"));
+				pi.setSKU(rs.getInt("goodsSKU"));
 				pi.setCateg(rs.getString("goodsCateg"));
 				pi.setPic(rs.getString("goodsPic"));
 				pi.setState(rs.getString("goodsState"));
@@ -78,18 +78,18 @@ public class GoodsIntroDaoImpl implements GoodsIntroDao{
 	}
 
 	@Override
-	public GoodsInfo queryByGoodsSKU(String goodsSKU) {
+	public GoodsInfo queryByGoodsSKU(int goodsSKU) {
 		try {
 			String sql="SELECT * FROM goodsInfo where goodsSKU=?";
 			stmt=DBC.con.prepareStatement(sql);
-			stmt.setString(1,goodsSKU);
+			stmt.setInt(1,goodsSKU);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				GoodsInfo pi=new GoodsInfo();
 				pi.setName(rs.getString("goodsName"));
-				pi.setPrice(rs.getString("goodsPrice"));
-				pi.setStock(rs.getString("goodsStock"));
-				pi.setSKU(rs.getString("goodsSKU"));
+				pi.setPrice(rs.getDouble("goodsPrice"));
+				pi.setStock(rs.getInt("goodsStock"));
+				pi.setSKU(rs.getInt("goodsSKU"));
 				pi.setCateg(rs.getString("goodsCateg"));
 				pi.setPic(rs.getString("goodsPic"));
 				pi.setState(rs.getString("goodsState"));
@@ -111,9 +111,9 @@ public class GoodsIntroDaoImpl implements GoodsIntroDao{
 			String sql="INSERT INTO goodsInfo (goodsName,goodsPrice,goodsStock,goodsSKU,goodsCateg,goodsPic,goodsState) VALUES (?,?,?,?,?,?,?)";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,goodsInfo.getName());
-			stmt.setString(2,goodsInfo.getPrice());
-			stmt.setString(3,goodsInfo.getStock());
-			stmt.setString(4,goodsInfo.getSKU());
+			stmt.setDouble(2,goodsInfo.getPrice());
+			stmt.setInt(3,goodsInfo.getStock());
+			stmt.setInt(4,goodsInfo.getSKU());
 			stmt.setString(5,goodsInfo.getCateg());
 			stmt.setString(6,goodsInfo.getPic());
 			stmt.setString(7,goodsInfo.getState());

@@ -24,7 +24,7 @@ public interface GoodsIntroDao {
 	 * @param String
 	 * @return boolean
 	 */
-	public GoodsInfo queryByGoodsSKU(String goodsSKU);
+	public GoodsInfo queryByGoodsSKU(int goodsSKU);
 	
 	/**
 	 * 传入GoodsInfo,若GoodsInfo已经存在抛出异常,SQL异常返回false
