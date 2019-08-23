@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import exception.RecordAlreadyExistException;
 import vo.GoodsInfo;
 
-public class GoodsIntroDaoImpl implements GoodsIntroDao{
+public class GoodsMenuDaoImpl implements GoodsMenuDao{
 
 	private JdbcTool DBC=new JdbcTool();
 	private PreparedStatement stmt=null;
 	private ResultSet rs=null;
 	
-	private ArrayList<GoodsInfo> ResultSetToArrayList(){
+	private ArrayList<GoodsInfo> ResultSetToProductInformationArrayList(){
 		try {
 			ArrayList<GoodsInfo> list=new ArrayList<GoodsInfo>();
 			
@@ -48,7 +48,7 @@ public class GoodsIntroDaoImpl implements GoodsIntroDao{
 			stmt=DBC.con.prepareStatement(sql);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
-				return ResultSetToArrayList();
+				return ResultSetToProductInformationArrayList();
 			}
 		}catch(Exception e) {
     		System.out.println(e.getMessage());
@@ -65,7 +65,7 @@ public class GoodsIntroDaoImpl implements GoodsIntroDao{
 			stmt.setString(1,goodsName);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
-				return ResultSetToArrayList();
+				return ResultSetToProductInformationArrayList();
 			}
 		}catch(Exception e) {
     		System.out.println(e.getMessage());

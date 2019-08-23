@@ -4,7 +4,7 @@ public class GoodsInfo {
 	private String Name;
 	private double Price;
 	private int Stock;
-	private int SKU;
+	private String SKU;
 	private String Categ;
 	private String Pic;
 	private String State;
@@ -18,7 +18,7 @@ public class GoodsInfo {
 	public void setStock(int stock) {
 		this.Stock = stock;
 	}
-	public void setSKU(int sku) {
+	public void setSKU(String sku) {
 		this.SKU = sku;
 	}
 	public void setCateg(String categ) {
@@ -40,7 +40,7 @@ public class GoodsInfo {
 	public int getStock() {
 		return Stock;
 	}
-	public int getSKU() {
+	public String getSKU() {
 		return SKU;
 	}
 	public String getCateg() {

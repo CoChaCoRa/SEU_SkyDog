@@ -32,7 +32,7 @@ public class MVODaoImpl implements MVODao {
 				mvo.setIntro(rs.getString("MVO_Intro"));
 				mvo.setVeriType(rs.getString("MVO_VeriType"));
 				mvo.setCertiAdd(rs.getString("MVO_CertiAdd"));
-				mvo.setCertiAdd(rs.getString("MVO_ID"));
+				mvo.setCertiAdd(rs.getString("username"));
 				return mvo;
 			}
 		} 
@@ -52,7 +52,7 @@ public class MVODaoImpl implements MVODao {
 			MVO mvo1=selectMVO(mvo.getCName_C());
 			if(mvo1!=null)throw new RecordAlreadyExistException();
 			//UPDATE mvo
-			String sql="INSERT INTO mvo (MVO_CName_C,MVO_CName_E,MVO_Intro,MVO_VeriType,MVO_CertiAdd,MVO_ID) VALUES (?,?,?,?,?,?)";
+			String sql="INSERT INTO mvo (MVO_CName_C,MVO_CName_E,MVO_Intro,MVO_VeriType,MVO_CertiAdd,username) VALUES (?,?,?,?,?,?)";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,mvo.getCName_C());
 			stmt.setString(2,mvo.getCName_E());

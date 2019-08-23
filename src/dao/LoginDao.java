@@ -17,6 +17,6 @@ public interface LoginDao {
 	 * @return boolean
 	 * @throws RecordAlreadyExistException
 	 */
-	public boolean insertUser(String username,String password)throws RecordAlreadyExistException;
+	public boolean insertUser(String username,String password,String authentification)throws RecordAlreadyExistException;
 	
 }

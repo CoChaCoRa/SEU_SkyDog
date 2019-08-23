@@ -28,6 +28,7 @@ public class LoginDaoImpl implements LoginDao{
 				User user=new User();
 				user.setUsername(rs.getString("username"));
 				user.setPassword(rs.getString("password"));
+				user.setAuthentification(rs.getString("authentification"));
 				return user;
 			}
 		} 
@@ -39,15 +40,16 @@ public class LoginDaoImpl implements LoginDao{
 	}
 	
 	@Override
-	public boolean insertUser(String username,String password)throws RecordAlreadyExistException{
+	public boolean insertUser(String username,String password,String authentification)throws RecordAlreadyExistException{
 		try {
 			User user=selectUser(username);
 			if(user!=null)throw new RecordAlreadyExistException();
 			//UPDATE login
-			String sql="INSERT INTO login (username,password) VALUES (?,?)";
+			String sql="INSERT INTO login (username,password,authentification) VALUES (?,?,?)";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,username);
 			stmt.setString(2,password);
+			stmt.setString(3,authentification);
 			stmt.executeUpdate();
 		}
 		catch (SQLException e) {

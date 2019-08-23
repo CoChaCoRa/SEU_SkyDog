@@ -1,34 +1,71 @@
 package vo;
 
+import java.sql.Date;
+
 public class OrderInfo {
-	private String OrderID = null;
-	private String OrderCreateTime = null;
-	private String OrderStatus = null;
-	private String OrderTrackingID = null;
+	private String goodsName = null;
+	private double goodsPrice = 0;
+	private int goodsNumber = 0;
+	private String goodsSKU = null;
+	private String orderID = null;
+	private Date orderCreateTime = null;
+	private String orderStatus = null;
+	private String orderTrackingID = null;
+	private String username = null;
 	
-	public void setOrderID(String id) {
-		this.OrderID = id;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
-	public void setOrderCreateTime(String time) {
-		this.OrderCreateTime = time;
+	public void setGoodsPrice(double goodsPrice) {
+		this.goodsPrice = goodsPrice;
 	}
-	public void setOrderStatus(String status) {
-		this.OrderStatus = status;
+	public void setGoodsNumber(int goodsNumber) {
+		this.goodsNumber = goodsNumber;
 	}
-	public void setOrderTrackingID(String id) {
-		this.OrderTrackingID = id;
+	public void setGoodsSKU(String goodsSKU){
+		this.goodsSKU=goodsSKU;
+	}
+	public void setOrderID(String orderID) {
+		this.orderID = orderID;
+	}
+	public void setOrderCreateTime(Date orderCreateTime) {
+		this.orderCreateTime = orderCreateTime;
+	}
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	public void setOrderTrackingID(String orderTrackingID) {
+		this.orderTrackingID = orderTrackingID;
+	}
+	public void setUserName(String username) {
+		this.username = username;
 	}
 	
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public double getGoodsPrice() {
+		return goodsPrice;
+	}
+	public int getGoodsNumber() {
+		return goodsNumber;
+	}
+	public String getGoodsSKU(){
+		return goodsSKU;
+	}
 	public String getOrderID() {
-		return OrderID;
+		return orderID;
 	}
-	public String getOrderCreateTime() {
-		return OrderCreateTime;
+	public Date getOrderCreateTime() {
+		return orderCreateTime;
 	}
 	public String getOrderStatus() {
-		return OrderStatus;
+		return orderStatus;
 	}
 	public String getOrderTrackingID() {
-		return OrderTrackingID;
+		return orderTrackingID;
+	}
+	public String getUserName() {
+		return username;
 	}
 }

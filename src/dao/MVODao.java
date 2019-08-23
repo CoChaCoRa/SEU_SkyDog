@@ -15,7 +15,8 @@ public interface MVODao {
 	 * 传入MVO,若CName_C已经存在抛出异常,SQL异常返回false
 	 * @param String
 	 * @return boolean
-	 * @throws RecordAlreadyExistException,RecordNotFoundException
+	 * @throws RecordAlreadyExistException
+	 * @throws RecordNotFoundException
 	 */
 	public boolean insertMVO(MVO mvo)throws RecordAlreadyExistException,RecordNotFoundException;
 	

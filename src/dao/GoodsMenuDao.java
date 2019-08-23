@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import vo.GoodsInfo;
 import exception.*;
 
-public interface GoodsIntroDao {
+public interface GoodsMenuDao {
 	/**
-	 * 返回ArrayList<GoodsInfo>对象
+	 * 杩斿洖ArrayList<GoodsInfo>
 	 * @return ArrayList<GoodsInfo>
 	 */
 	public ArrayList<GoodsInfo> getAllGoods();
 	
 	/**
-	 * 传入goodsName,若goodsName不存在返回null
+	 * 浼犲叆goodsName,鑻oodsName涓嶅瓨鍦ㄥ垯杩斿洖null
 	 * @param String
 	 * @return boolean
 	 */
 	public ArrayList<GoodsInfo> queryByGoodsName(String goodsName);
 	
 	/**
-	 * 传入goodsSKU,若goodsSKU不存在返回null
+	 * 浼犲叆goodsSKU,鑻oodsSKU涓嶅瓨鍦ㄥ垯杩斿洖null
 	 * @param String
 	 * @return boolean
 	 */
 	public GoodsInfo queryByGoodsSKU(String goodsSKU);
 	
 	/**
-	 * 传入GoodsInfo,若GoodsInfo已经存在抛出异常,SQL异常返回false
+	 * 浼犲叆GoodsInfo,鑻oodsInfo宸茬粡瀛樺湪鎶涘嚭寮傚父,SQL寮傚父杩斿洖false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordAlreadyExistException
