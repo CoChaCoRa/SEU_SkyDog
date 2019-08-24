@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.LoginDao;
 import dao.LoginDaoImpl;
@@ -33,6 +34,12 @@ public class Login extends HttpServlet {
 		User user=login.selectUser(username);
 		
 		if(user!=null&&user.getPassword().equals(password)){
+			HttpSession session = request.getSession();
+			String t_username = username;
+			String userKey = new String("username");
+			session.setAttribute(userKey, t_username);
+			System.out.println(session.getAttribute(userKey));
+			
 			response.sendRedirect("index.html");
 		}else{
 			response.sendRedirect("login.html");
