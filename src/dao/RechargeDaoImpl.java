@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exception.OutOfLimitException;
 import exception.RecordAlreadyExistException;
 import exception.RecordNotFoundException;
 import vo.Recharge;
+import vo.Wallet;
 
 public class RechargeDaoImpl implements RechargeDao{
 	private JdbcTool DBC=new JdbcTool();
@@ -104,7 +106,7 @@ public class RechargeDaoImpl implements RechargeDao{
 	}
 	
 	@Override
-	public boolean updateRecharge(Recharge recharge)throws RecordNotFoundException {
+	public boolean addressRecharge(Recharge recharge)throws RecordNotFoundException,OutOfLimitException {
 		try {
 			Recharge gf=queryByNameTime(recharge.getUsername(),recharge.getTime());
 			if(gf!=null)throw new RecordNotFoundException();
@@ -117,7 +119,19 @@ public class RechargeDaoImpl implements RechargeDao{
 			stmt.setString(4,recharge.getUsername());
 			stmt.setDate(5,recharge.getTime());
 			stmt.executeUpdate();
-			
+			//handle money if passed
+			if(recharge.getState()=="passed"){
+				WalletDao walletDao=new WalletDaoImpl();
+				Wallet wallet=walletDao.selectWallet(recharge.getUsername());
+				if(wallet==null)throw new RecordNotFoundException();
+				Double money=wallet.getMoney();
+				if(recharge.getType()=="extract"&&money<recharge.getAmount())
+					throw new OutOfLimitException();
+				if(recharge.getType()=="extract")money-=recharge.getAmount();
+				else money+=recharge.getAmount();
+				wallet.setMoney(money);
+				walletDao.updateWallet(wallet);
+			}
 		}
 		catch (SQLException e) {
             System.out.println(e.getMessage());

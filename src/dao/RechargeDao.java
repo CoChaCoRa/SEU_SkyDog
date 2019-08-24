@@ -29,12 +29,13 @@ public interface RechargeDao {
 	public boolean insertRecharge(Recharge recharge)throws RecordAlreadyExistException;
 	
 	/**
-	 * 更新Recharge，若Recharge不存在则抛出异常,SQL异常返回false
+	 * Recharge审核通过/不通过，若Recharge不存在则抛出异常,SQL异常返回false  
 	 * @param String
 	 * @return boolean
 	 * @throws RecordNotFoundException
+	 * @throws OutOfLimitException
 	 */
-    public boolean updateRecharge(Recharge recharge)throws RecordNotFoundException;
+    public boolean addressRecharge(Recharge recharge)throws RecordNotFoundException,OutOfLimitException;
     
     
 }

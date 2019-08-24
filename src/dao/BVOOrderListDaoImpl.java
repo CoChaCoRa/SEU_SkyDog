@@ -179,6 +179,7 @@ public class BVOOrderListDaoImpl implements BVOOrderListDao{
 		wallet.setMoney(money);
 		walletDao.updateWallet(wallet);
 		orderInfo.setOrderStatus("completed");
+		updateOrderInfo(orderInfo);
 		return false;
 	}
 
