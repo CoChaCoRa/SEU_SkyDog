@@ -5,14 +5,14 @@ import vo.BVO;
 
 public interface BVODao {
 	/**
-	 * 传入name参数，返回MVO对象，若MVO不存在返回null
+	 * 浼犲叆name鍙傛暟锛岃繑鍥濵VO瀵硅薄锛岃嫢MVO涓嶅瓨鍦ㄨ繑鍥瀗ull
 	 * @param String
 	 * @return BVO
 	 */
-	public BVO selectBVO(String name);
+	public BVO selectBVO(String username);
 	
 	/**
-	 * 传入BVO,若name已经存在抛出异常,SQL异常返回false
+	 * 浼犲叆BVO,鑻ame宸茬粡瀛樺湪鎶涘嚭寮傚父,SQL寮傚父杩斿洖false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordAlreadyExistException
