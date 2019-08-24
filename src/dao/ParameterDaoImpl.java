@@ -64,8 +64,8 @@ public class ParameterDaoImpl implements ParameterDao{
 			if(rs.next()) {
 				Parameter pi=new Parameter();
 				pi.setKey(rs.getString("parameter_key"));
-				pi.setValue(rs.getInt("paramater_value"));
-				pi.setDeclare(rs.getString("paramater_declare"));
+				pi.setValue(rs.getInt("parameter_value"));
+				pi.setDeclare(rs.getString("parameter_declare"));
 				return pi;
 			}
 		}catch(Exception e) {
