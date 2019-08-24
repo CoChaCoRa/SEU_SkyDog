@@ -5,11 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import exception.OutOfLimitException;
-import exception.RecordAlreadyExistException;
-import exception.RecordNotFoundException;
-import vo.GoodsInfo;
-import vo.OrderInfo;
+import exception.*;
+import vo.*;
 
 public class BVOOrderListDaoImpl implements BVOOrderListDao{
 
@@ -171,9 +168,17 @@ public class BVOOrderListDaoImpl implements BVOOrderListDao{
 
 	@Override
 	public boolean payRequest(OrderInfo orderInfo) throws RecordNotFoundException, OutOfLimitException {
-		// TODO Auto-generated method stub
-		
-		
+		OrderInfo oderInfo1=queryByOrderID(orderInfo.getOrderID(),orderInfo.getUserName());
+		if(oderInfo1==null)throw new RecordNotFoundException();
+		WalletDao walletDao=new WalletDaoImpl();
+		Wallet wallet=walletDao.selectWallet(orderInfo.getUserName());
+		if(wallet==null)throw new RecordNotFoundException();
+		Double money=wallet.getMoney();
+		if(money<orderInfo.getGoodsNumber()*orderInfo.getGoodsPrice())throw new OutOfLimitException();
+		money-=orderInfo.getGoodsNumber()*orderInfo.getGoodsPrice();
+		wallet.setMoney(money);
+		walletDao.updateWallet(wallet);
+		orderInfo.setOrderStatus("completed");
 		return false;
 	}
 

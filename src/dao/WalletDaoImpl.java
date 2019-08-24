@@ -18,11 +18,11 @@ public class WalletDaoImpl implements WalletDao{
 	private ResultSet rs=null;
 	
 	@Override
-	public Wallet selectWallet(String account) {
-		String sql="SELECT * FROM wallet WHERE account=?";
+	public Wallet selectWallet(String username) {
+		String sql="SELECT * FROM wallet WHERE username=?";
 		try {
 			stmt=DBC.con.prepareStatement(sql);
-			stmt.setString(1,account);
+			stmt.setString(1,username);
 			rs = stmt.executeQuery();
 			if(rs.next()){
 				Wallet wallet=new Wallet();
@@ -71,7 +71,7 @@ public class WalletDaoImpl implements WalletDao{
 	@Override
 	public boolean updateWallet(Wallet wallet) throws RecordNotFoundException {
 		try {
-			Wallet wallet1=selectWallet(wallet.getAccount());
+			Wallet wallet1=selectWallet(wallet.getUserName());
 			if(wallet1==null)throw new RecordNotFoundException();
 			//UPDATE wallet
 			String sql="UPDATE wallet SET username=?,email=?,password=?,money=?,"

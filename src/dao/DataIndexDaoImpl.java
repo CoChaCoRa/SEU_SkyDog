@@ -102,7 +102,7 @@ public class DataIndexDaoImpl implements DataIndexDao{
 	public boolean updateDataDict(DataDict datadict)throws RecordNotFoundException {
 		try {
 			DataDict datadict1=selectDataDict(datadict.getCode());
-			if(datadict1!=null)throw new RecordNotFoundException();
+			if(datadict1==null)throw new RecordNotFoundException();
 			//UPDATE dataindex
 			String sql="UPDATE dataindex SET IndexType=?,Description=?,CodeValue=? where Code=?";
 			stmt=DBC.con.prepareStatement(sql);

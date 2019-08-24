@@ -59,6 +59,23 @@ public class GoodsMenuDaoImpl implements GoodsMenuDao{
 	}
 
 	@Override
+	public ArrayList<GoodsInfo> getAllOnShelfGoods() {
+		try {
+			String sql="SELECT * FROM goodsInfo WHERE goodsState=?";
+			stmt=DBC.con.prepareStatement(sql);
+			stmt.setString(1, "onshelf");
+			rs=stmt.executeQuery();
+			if(rs.next()) {
+				return ResultSetToProductInformationArrayList();
+			}
+		}catch(Exception e) {
+    		System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
 	public ArrayList<GoodsInfo> queryByGoodsName(String goodsName) {
 		try {
 			String sql="SELECT * FROM goodsInfo where goodsName=?";

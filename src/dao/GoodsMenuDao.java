@@ -2,8 +2,6 @@ package dao;
 
 import java.util.ArrayList;
 import vo.GoodsInfo;
-import vo.OrderInfo;
-import vo.WishList;
 import exception.*;
 
 public interface GoodsMenuDao {
@@ -12,6 +10,12 @@ public interface GoodsMenuDao {
 	 * @return ArrayList<GoodsInfo>
 	 */
 	public ArrayList<GoodsInfo> getAllGoods();
+	
+	/**
+	 * 返回ArrayList<GoodsInfo>  ()
+	 * @return ArrayList<GoodsInfo>
+	 */
+	public ArrayList<GoodsInfo> getAllOnShelfGoods();
 	
 	/**
 	 * 传入goodsName,若goodsName不存在则返回null
@@ -51,4 +55,5 @@ public interface GoodsMenuDao {
 	 * @throws RecordNotFoundException
 	 */
     public boolean deleteWishList(String goodsSKU)throws RecordNotFoundException;
+    
 }

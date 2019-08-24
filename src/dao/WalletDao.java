@@ -5,14 +5,14 @@ import vo.Wallet;
 
 public interface WalletDao {
 	/**
-	 * 传入account参数，返回Wallet对象，若MVO不存在返回null
+	 * 传入username参数，返回Wallet对象，若MVO不存在返回null
 	 * @param String
 	 * @return BVO
 	 */
-	public Wallet selectWallet(String account);
+	public Wallet selectWallet(String username);
 	
 	/**
-	 * 传入Wallet,若account已经存在抛出异常,SQL异常返回false
+	 * 传入Wallet,若username已经存在抛出异常,SQL异常返回false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordAlreadyExistException
