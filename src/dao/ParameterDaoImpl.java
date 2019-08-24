@@ -122,7 +122,7 @@ public class ParameterDaoImpl implements ParameterDao{
 	public boolean deleteParameter(String key) {
 		try {
 			//UPDATE orderInfo
-			String sql="DELETE * from parameter WHERE parameter_key=?";
+			String sql="DELETE from parameter WHERE parameter_key=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,key);
 			stmt.executeUpdate();

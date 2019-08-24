@@ -125,7 +125,7 @@ public class DataIndexDaoImpl implements DataIndexDao{
 	public boolean deleteDataDict(int code) {
 		try {
 			//UPDATE orderInfo
-			String sql="DELETE * from dataindex WHERE Code=?";
+			String sql="DELETE from dataindex WHERE Code=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setInt(1,code);
 			stmt.executeUpdate();
