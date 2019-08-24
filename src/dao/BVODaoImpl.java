@@ -17,11 +17,11 @@ public class BVODaoImpl implements BVODao {
 	private ResultSet rs=null;
 
 	@Override
-	public BVO selectBVO(String name) {
-		String sql="SELECT * FROM bvo WHERE name=?";
+	public BVO selectBVO(String username) {
+		String sql="SELECT * FROM bvo WHERE username=?";
 		try {
 			stmt=DBC.con.prepareStatement(sql);
-			stmt.setString(1,name);
+			stmt.setString(1,username);
 			rs = stmt.executeQuery();
 			if(rs.next()){
 				BVO bvo=new BVO();
