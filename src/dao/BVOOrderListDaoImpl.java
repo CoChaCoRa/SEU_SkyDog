@@ -5,11 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import exception.*;
+import exception.OutOfLimitException;
+import exception.RecordAlreadyExistException;
+import exception.RecordNotFoundException;
 import vo.GoodsInfo;
 import vo.OrderInfo;
 
-public class BVOOrderManageDaoImpl implements BVOrderManageDao{
+public class BVOOrderListDaoImpl implements BVOOrderListDao{
 
 	private JdbcTool DBC=new JdbcTool();
 	private PreparedStatement stmt=null;
@@ -43,10 +45,11 @@ public class BVOOrderManageDaoImpl implements BVOrderManageDao{
 	}
 	
 	@Override
-	public ArrayList<OrderInfo> getAllOrders() {
+	public ArrayList<OrderInfo> queryByUsername(String username) {
 		try {
-			String sql="SELECT * FROM orderInfo";
+			String sql="SELECT * FROM orderInfo where username=?";
 			stmt=DBC.con.prepareStatement(sql);
+			stmt.setString(1, username);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				return ResultSetToArrayList();
@@ -59,11 +62,12 @@ public class BVOOrderManageDaoImpl implements BVOrderManageDao{
 	}
 
 	@Override
-	public ArrayList<OrderInfo> queryByGoodsName(String goodsName) {
+	public ArrayList<OrderInfo> queryByGoodsName(String goodsName,String username) {
 		try {
-			String sql="SELECT * FROM orderInfo where goodsName=?";
+			String sql="SELECT * FROM orderInfo where goodsName=? AND username=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,goodsName);
+			stmt.setString(2,username);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				return ResultSetToArrayList();
@@ -76,11 +80,12 @@ public class BVOOrderManageDaoImpl implements BVOrderManageDao{
 	}
 
 	@Override
-	public OrderInfo queryByOrderID(String orderID) {
+	public OrderInfo queryByOrderID(String orderID,String username) {
 		try {
-			String sql="SELECT * FROM orderInfo where orderID=?";
+			String sql="SELECT * FROM orderInfo where orderID=? AND username=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,orderID);
+			stmt.setString(2, username);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				OrderInfo pi=new OrderInfo();
@@ -105,9 +110,9 @@ public class BVOOrderManageDaoImpl implements BVOrderManageDao{
 	public boolean insertOrderInfo(OrderInfo orderInfo) 
 			throws RecordNotFoundException,RecordAlreadyExistException,OutOfLimitException {
 		try {
-			OrderInfo gf=queryByOrderID(orderInfo.getOrderID());
+			OrderInfo gf=queryByOrderID(orderInfo.getOrderID(),orderInfo.getUserName());
 			if(gf!=null)throw new RecordAlreadyExistException();
-			GoodsIntroDao goods=new GoodsIntroDaoImpl();
+			GoodsMenuDao goods=new GoodsMenuDaoImpl();
 			GoodsInfo goodsInfo = goods.queryByGoodsSKU(orderInfo.getGoodsSKU());
 			if(goodsInfo==null)throw new RecordNotFoundException();
 			if(goodsInfo.getStock()<orderInfo.getGoodsNumber())throw new OutOfLimitException();
@@ -138,7 +143,7 @@ public class BVOOrderManageDaoImpl implements BVOrderManageDao{
 	@Override
 	public boolean updateOrderInfo(OrderInfo orderInfo) throws RecordNotFoundException {
 		try {
-			OrderInfo oderInfo1=queryByOrderID(orderInfo.getOrderID());
+			OrderInfo oderInfo1=queryByOrderID(orderInfo.getOrderID(),orderInfo.getUserName());
 			if(oderInfo1==null)throw new RecordNotFoundException();
 			//UPDATE orderInfo
 			String sql="UPDATE orderInfo SET goodsName=?,goodsPrice=?,goodsNumber=?,goodsSKU=?,"
@@ -164,4 +169,13 @@ public class BVOOrderManageDaoImpl implements BVOrderManageDao{
 		return true;
 	}
 
+	@Override
+	public boolean payRequest(OrderInfo orderInfo) throws RecordNotFoundException, OutOfLimitException {
+		// TODO Auto-generated method stub
+		
+		
+		return false;
+	}
+
+	
 }

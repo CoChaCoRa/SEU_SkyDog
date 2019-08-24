@@ -5,19 +5,34 @@ import vo.BVO;
 
 public interface BVODao {
 	/**
-	 * 浼犲叆name鍙傛暟锛岃繑鍥濵VO瀵硅薄锛岃嫢MVO涓嶅瓨鍦ㄨ繑鍥瀗ull
+	 * 传入username返回BVO,不存在则返回null
 	 * @param String
 	 * @return BVO
 	 */
 	public BVO selectBVO(String username);
 	
 	/**
-	 * 浼犲叆BVO,鑻ame宸茬粡瀛樺湪鎶涘嚭寮傚父,SQL寮傚父杩斿洖false
+	 * 传入name返回BVO,不存在则返回null
+	 * @param String
+	 * @return BVO
+	 */
+	public BVO selectBVOName(String name);
+	
+	/**
+	 * 传入BVO,若username不存在/name已经存在抛出异常,SQL异常返回false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordAlreadyExistException
 	 * @throws RecordNotFoundException
 	 */
 	public boolean insertBVO(BVO bvo)throws RecordAlreadyExistException,RecordNotFoundException;
+	
+	/**
+	 * 传入BVO,若BVO不存在抛出异常,SQL异常返回false
+	 * @param String
+	 * @return boolean
+	 * @throws RecordNotFoundException
+	 */
+	public boolean updateBVO(BVO BVO)throws RecordNotFoundException;
 	
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import exception.*;
 import vo.OrderInfo;
 
-public interface BVOrderManageDao {
+public interface MVOrderManageDao {
 	
 	/**
 	 * 返回ArrayList<OrderInfo>对象
@@ -36,7 +36,7 @@ public interface BVOrderManageDao {
 	public boolean insertOrderInfo(OrderInfo orderInfo)throws RecordNotFoundException,RecordAlreadyExistException,OutOfLimitException;
 	
 	/**
-	 * 传入GoodsInfo,若GoodsInfo不存在抛出异常,SQL异常返回false
+	 * 传入OrderInfo,若OrderInfo不存在抛出异常,SQL异常返回false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordNotFoundException

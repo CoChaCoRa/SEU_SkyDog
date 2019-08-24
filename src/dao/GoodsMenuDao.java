@@ -2,6 +2,8 @@ package dao;
 
 import java.util.ArrayList;
 import vo.GoodsInfo;
+import vo.OrderInfo;
+import vo.WishList;
 import exception.*;
 
 public interface GoodsMenuDao {
@@ -32,4 +34,21 @@ public interface GoodsMenuDao {
 	 * @throws RecordAlreadyExistException
 	 */
 	public boolean insertGoodsInfo(GoodsInfo goodsInfo)throws RecordAlreadyExistException;
+	
+	/**
+	 * 传入GoodsInfo,若GoodsInfo不存在抛出异常,SQL异常返回false
+	 * @param String
+	 * @return boolean
+	 * @throws RecordNotFoundException
+	 */
+	public boolean updateGoodsInfo(GoodsInfo goodsInfo)throws RecordNotFoundException;
+	
+	/**
+	 * 传入goodsSKU，若goodsSKU不存在则抛出异常,SQL异常返回false
+	 * @param goodsSKU
+	 * @return boolean
+	 * @throws RecordNotFoundException
+	 * @throws RecordNotFoundException
+	 */
+    public boolean deleteWishList(String goodsSKU)throws RecordNotFoundException;
 }

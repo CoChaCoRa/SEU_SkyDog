@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exception.RecordAlreadyExistException;
+import exception.RecordNotFoundException;
 import vo.GoodsInfo;
 
 public class GoodsMenuDaoImpl implements GoodsMenuDao{
@@ -114,6 +115,53 @@ public class GoodsMenuDaoImpl implements GoodsMenuDao{
 			stmt.setString(5,goodsInfo.getCateg());
 			stmt.setString(6,goodsInfo.getPic());
 			stmt.setString(7,goodsInfo.getState());
+			stmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean updateGoodsInfo(GoodsInfo goodsInfo) throws RecordNotFoundException {
+		try {
+			GoodsInfo goodsInfo1=queryByGoodsSKU(goodsInfo.getSKU());
+			if(goodsInfo1==null)throw new RecordNotFoundException();
+			//UPDATE goodsInfo
+			String sql="UPDATE goodsInfo SET goodsName=?,goodsPrice=?,goodsStock=?,"
+					+ "goodsCateg=?,goodsPic=?,goodsState=?,"
+					+ "WHERE goodsSKU=?";
+			stmt=DBC.con.prepareStatement(sql);
+			stmt.setString(1,goodsInfo.getName());
+			stmt.setDouble(2,goodsInfo.getPrice());
+			stmt.setInt(3,goodsInfo.getStock());
+			stmt.setString(4,goodsInfo.getCateg());
+			stmt.setString(5,goodsInfo.getPic());
+			stmt.setString(6,goodsInfo.getState());
+			stmt.setString(7,goodsInfo.getSKU());
+			stmt.executeUpdate();
+			
+		}
+		catch (SQLException e) {
+            System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean deleteWishList(String goodsSKU) throws RecordNotFoundException {
+		try {
+			GoodsInfo goodsInfo1=queryByGoodsSKU(goodsSKU);
+			if(goodsInfo1==null)throw new RecordNotFoundException();
+			//UPDATE goodsInfo
+			String sql="DELETE FROM goodsInfo where goodsSKU=?";
+			stmt=DBC.con.prepareStatement(sql);
+			stmt.setString(1,goodsSKU);
 			stmt.executeUpdate();
 		}
 		catch (SQLException e) {

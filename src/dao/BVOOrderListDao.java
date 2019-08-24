@@ -7,7 +7,7 @@ import exception.RecordAlreadyExistException;
 import exception.RecordNotFoundException;
 import vo.OrderInfo;
 
-public interface MVOOrderListDao {
+public interface BVOOrderListDao {
 	/**
 	 * 传入username,若username不存在返回null   (MVO仅能查看自己的)
 	 * @param String

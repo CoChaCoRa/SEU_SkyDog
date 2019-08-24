@@ -76,7 +76,7 @@ public class WishListDaoImpl implements WishListDao{
 	public boolean deleteWishList(WishList wishlist) throws RecordNotFoundException {
 		try {
 			//UPDATE wishlist
-			String sql="DELETE FROM wishlist whrer username = ? AND sku = ?";
+			String sql="DELETE FROM wishlist where username = ? AND sku = ?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,wishlist.getUsername());
 			stmt.setString(2,wishlist.getSKU());

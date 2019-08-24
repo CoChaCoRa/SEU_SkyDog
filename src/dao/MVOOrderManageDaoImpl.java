@@ -5,13 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import exception.OutOfLimitException;
-import exception.RecordAlreadyExistException;
-import exception.RecordNotFoundException;
+import exception.*;
 import vo.GoodsInfo;
 import vo.OrderInfo;
 
-public class MVOOrderListDaoImpl implements MVOOrderListDao{
+public class MVOOrderManageDaoImpl implements MVOrderManageDao{
 
 	private JdbcTool DBC=new JdbcTool();
 	private PreparedStatement stmt=null;
@@ -45,11 +43,10 @@ public class MVOOrderListDaoImpl implements MVOOrderListDao{
 	}
 	
 	@Override
-	public ArrayList<OrderInfo> queryByUsername(String username) {
+	public ArrayList<OrderInfo> getAllOrders() {
 		try {
-			String sql="SELECT * FROM orderInfo where username=?";
+			String sql="SELECT * FROM orderInfo";
 			stmt=DBC.con.prepareStatement(sql);
-			stmt.setString(1, username);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				return ResultSetToArrayList();
@@ -62,12 +59,11 @@ public class MVOOrderListDaoImpl implements MVOOrderListDao{
 	}
 
 	@Override
-	public ArrayList<OrderInfo> queryByGoodsName(String goodsName,String username) {
+	public ArrayList<OrderInfo> queryByGoodsName(String goodsName) {
 		try {
-			String sql="SELECT * FROM orderInfo where goodsName=? AND username=?";
+			String sql="SELECT * FROM orderInfo where goodsName=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,goodsName);
-			stmt.setString(2,username);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				return ResultSetToArrayList();
@@ -80,12 +76,11 @@ public class MVOOrderListDaoImpl implements MVOOrderListDao{
 	}
 
 	@Override
-	public OrderInfo queryByOrderID(String orderID,String username) {
+	public OrderInfo queryByOrderID(String orderID) {
 		try {
-			String sql="SELECT * FROM orderInfo where orderID=? AND username=?";
+			String sql="SELECT * FROM orderInfo where orderID=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,orderID);
-			stmt.setString(2, username);
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				OrderInfo pi=new OrderInfo();
@@ -110,9 +105,9 @@ public class MVOOrderListDaoImpl implements MVOOrderListDao{
 	public boolean insertOrderInfo(OrderInfo orderInfo) 
 			throws RecordNotFoundException,RecordAlreadyExistException,OutOfLimitException {
 		try {
-			OrderInfo gf=queryByOrderID(orderInfo.getOrderID(),orderInfo.getUserName());
+			OrderInfo gf=queryByOrderID(orderInfo.getOrderID());
 			if(gf!=null)throw new RecordAlreadyExistException();
-			GoodsIntroDao goods=new GoodsIntroDaoImpl();
+			GoodsMenuDao goods=new GoodsMenuDaoImpl();
 			GoodsInfo goodsInfo = goods.queryByGoodsSKU(orderInfo.getGoodsSKU());
 			if(goodsInfo==null)throw new RecordNotFoundException();
 			if(goodsInfo.getStock()<orderInfo.getGoodsNumber())throw new OutOfLimitException();
@@ -143,7 +138,7 @@ public class MVOOrderListDaoImpl implements MVOOrderListDao{
 	@Override
 	public boolean updateOrderInfo(OrderInfo orderInfo) throws RecordNotFoundException {
 		try {
-			OrderInfo oderInfo1=queryByOrderID(orderInfo.getOrderID(),orderInfo.getUserName());
+			OrderInfo oderInfo1=queryByOrderID(orderInfo.getOrderID());
 			if(oderInfo1==null)throw new RecordNotFoundException();
 			//UPDATE orderInfo
 			String sql="UPDATE orderInfo SET goodsName=?,goodsPrice=?,goodsNumber=?,goodsSKU=?,"
@@ -169,13 +164,4 @@ public class MVOOrderListDaoImpl implements MVOOrderListDao{
 		return true;
 	}
 
-	@Override
-	public boolean payRequest(OrderInfo orderInfo) throws RecordNotFoundException, OutOfLimitException {
-		// TODO Auto-generated method stub
-		
-		
-		return false;
-	}
-
-	
 }
