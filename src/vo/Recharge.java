@@ -1,11 +1,13 @@
 package vo;
 
+import java.sql.Date;
+
 public class Recharge {
 	private String Username;
 	private String Type;
-	private int Amount;
-	private String Time;
-	private String Statement;
+	private Double Amount;
+	private Date Time;
+	private String state;
 	
 	public void setUsername(String username) {
 		this.Username = username;
@@ -13,14 +15,14 @@ public class Recharge {
 	public void setType(String type) {
 		this.Type = type;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(Double amount) {
 		this.Amount = amount;
 	}
-	public void setTime(String time) {
+	public void setTime(Date time) {
 		this.Time = time;
 	}
-	public void setStatement(String state) {
-		this.Statement = state;
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	public String getUsername() {
@@ -29,13 +31,13 @@ public class Recharge {
 	public String getType() {
 		return Type;
 	}
-	public int getAmount() {
+	public Double getAmount() {
 		return Amount;
 	}
-	public String getTime() {
+	public Date getTime() {
 		return Time;
 	}
 	public String getState() {
-		return Statement;
+		return state;
 	}
 }

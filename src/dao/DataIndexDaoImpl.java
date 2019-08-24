@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exception.RecordAlreadyExistException;
+import exception.RecordNotFoundException;
 import vo.DataDict;
 public class DataIndexDaoImpl implements DataIndexDao{
 	
@@ -50,11 +52,36 @@ public class DataIndexDaoImpl implements DataIndexDao{
 		}
 		return null;
 	}
+
+	@Override
+	public DataDict selectDataDict(int code) {
+		String sql="SELECT * FROM dataindex WHERE code=?";
+		try {
+			stmt=DBC.con.prepareStatement(sql);
+			stmt.setInt(1,code);
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				DataDict dataDict=new DataDict();
+				dataDict.setIndexType(rs.getString("IndexType"));
+				dataDict.setDescription(rs.getString("Description"));
+				dataDict.setCode(rs.getInt("Code"));
+				dataDict.setCodeValue(rs.getString("CodeValue"));
+				return dataDict;
+			}
+		} 
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	@Override
-	public boolean insertDataDict(DataDict datadict){
+	public boolean insertDataDict(DataDict datadict)throws RecordAlreadyExistException{
 		try {
-			//UPDATE goodsInfo
+			DataDict datadict1=selectDataDict(datadict.getCode());
+			if(datadict1!=null)throw new RecordAlreadyExistException();
+			//UPDATE dataindex
 			String sql="INSERT INTO dataindex (IndexType,Description,Code,CodeValue) VALUES (?,?,?,?)";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,datadict.getIndexType());
@@ -72,15 +99,17 @@ public class DataIndexDaoImpl implements DataIndexDao{
 	}
 	
 	@Override
-	public boolean updateDataDict(DataDict datadict) {
+	public boolean updateDataDict(DataDict datadict)throws RecordNotFoundException {
 		try {
-			//UPDATE orderInfo
-			String sql="UPDATE dataindex SET IndexType=?,Description=?,Code=?,CodeValue=?";
+			DataDict datadict1=selectDataDict(datadict.getCode());
+			if(datadict1!=null)throw new RecordNotFoundException();
+			//UPDATE dataindex
+			String sql="UPDATE dataindex SET IndexType=?,Description=?,CodeValue=? where Code=?";
 			stmt=DBC.con.prepareStatement(sql);
 			stmt.setString(1,datadict.getIndexType());
 			stmt.setString(2,datadict.getDescription());
-			stmt.setInt(3,datadict.getCode());
-			stmt.setString(4,datadict.getCodeValue());
+			stmt.setString(3,datadict.getCodeValue());
+			stmt.setInt(4,datadict.getCode());
 			stmt.executeUpdate();
 			
 		}
@@ -93,15 +122,12 @@ public class DataIndexDaoImpl implements DataIndexDao{
 	}
 	
 	@Override
-	public boolean deleteDataDict(DataDict datadict) {
+	public boolean deleteDataDict(int code) {
 		try {
 			//UPDATE orderInfo
-			String sql="DELETE from dataindex WHERE IndexType=?,Description=?,Code=?,CodeValue=?";
+			String sql="DELETE * from dataindex WHERE Code=?";
 			stmt=DBC.con.prepareStatement(sql);
-			stmt.setString(1,datadict.getIndexType());
-			stmt.setString(2,datadict.getDescription());
-			stmt.setInt(3,datadict.getCode());
-			stmt.setString(4,datadict.getCodeValue());
+			stmt.setInt(1,code);
 			stmt.executeUpdate();
 			
 		}
@@ -112,4 +138,5 @@ public class DataIndexDaoImpl implements DataIndexDao{
 		}
 		return true;
 	}
+
 }

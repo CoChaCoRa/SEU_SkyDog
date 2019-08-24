@@ -1,36 +1,40 @@
 package dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
-import vo.Parameter;
 import vo.Recharge;
 import exception.*;
 
 public interface RechargeDao {
 	/**
-	 * 杩斿洖ArrayList<Recharge>瀵硅薄
+	 * 返回ArrayList<Recharge>对象
 	 * @return ArrayList<Recharge>
 	 */
 	public ArrayList<Recharge> getAllRecharge();
 	
 	/**
-	 * 鎻掑叆Recharge,濡傛灉Recharge宸茬粡瀛樺湪鍒欐姏鍑哄紓甯�,鎻掑叆澶辫触杩斿洖false
+	 * 传入username,op_time,若不存在返回null
+	 * @param String
+	 * @return boolean
+	 */
+	public Recharge queryByNameTime(String username,Date time);
+	
+	/**
+	 * 插入Recharge,如果Recharge已经存在则抛出异常,插入失败返回false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordAlreadyExistException
 	 */
-	public boolean insertRecharge(Recharge recharge);
+	public boolean insertRecharge(Recharge recharge)throws RecordAlreadyExistException;
 	
 	/**
-	 * 鏇存柊Recharge锛岃嫢Recharge涓嶅瓨鍦ㄥ垯鎶涘嚭寮傚父,SQL寮傚父杩斿洖false
+	 * 更新Recharge，若Recharge不存在则抛出异常,SQL异常返回false
 	 * @param String
 	 * @return boolean
 	 * @throws RecordNotFoundException
 	 */
-    public boolean updateRecharge(Recharge recharge);
+    public boolean updateRecharge(Recharge recharge)throws RecordNotFoundException;
     
     
-    
-	public boolean deleteParameter(Parameter parameter);
-
 }
