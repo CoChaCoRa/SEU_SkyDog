@@ -18,8 +18,34 @@ public class MVODaoImpl implements MVODao {
 	private PreparedStatement stmt=null;
 	private ResultSet rs=null;
 	
+
 	@Override
-	public MVO selectMVO(String CName_C) {
+	public MVO selectMVO(String username) {
+		String sql="SELECT * FROM mvo WHERE username=?";
+		try {
+			stmt=DBC.con.prepareStatement(sql);
+			stmt.setString(1,username);
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				MVO mvo=new MVO();
+				mvo.setCName_C(rs.getString("MVO_CName_C"));
+				mvo.setCName_E(rs.getString("MVO_CName_E"));
+				mvo.setIntro(rs.getString("MVO_Intro"));
+				mvo.setVeriType(rs.getString("MVO_VeriType"));
+				mvo.setCertiAdd(rs.getString("MVO_CertiAdd"));
+				mvo.setCertiAdd(rs.getString("username"));
+				return mvo;
+			}
+		} 
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public MVO selectMVOName(String CName_C) {
 		String sql="SELECT * FROM mvo WHERE MVO_CName_C=?";
 		try {
 			stmt=DBC.con.prepareStatement(sql);
@@ -49,7 +75,7 @@ public class MVODaoImpl implements MVODao {
 			LoginDao login = new LoginDaoImpl();
 			User user=login.selectUser(mvo.getID());
 			if(user==null)throw new RecordNotFoundException();
-			MVO mvo1=selectMVO(mvo.getCName_C());
+			MVO mvo1=selectMVOName(mvo.getCName_C());
 			if(mvo1!=null)throw new RecordAlreadyExistException();
 			//UPDATE mvo
 			String sql="INSERT INTO mvo (MVO_CName_C,MVO_CName_E,MVO_Intro,MVO_VeriType,MVO_CertiAdd,username) VALUES (?,?,?,?,?,?)";
@@ -69,5 +95,6 @@ public class MVODaoImpl implements MVODao {
 		}
 		return true;
 	}
+
 
 }
